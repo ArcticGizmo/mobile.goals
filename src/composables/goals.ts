@@ -8,18 +8,18 @@ interface BaseGoal {
   icon?: string;
 }
 
-interface MilestoneGoal extends BaseGoal {
+export interface MilestoneGoal extends BaseGoal {
   type: 'milestone';
   targets: number[];
   records: string[];
 }
 
-interface SimpleGoal extends BaseGoal {
+export interface SimpleGoal extends BaseGoal {
   type: 'simple';
   completedAt?: string;
 }
 
-type Goal = MilestoneGoal | SimpleGoal;
+export type Goal = MilestoneGoal | SimpleGoal;
 
 const GOAL_KEY = 'goals';
 

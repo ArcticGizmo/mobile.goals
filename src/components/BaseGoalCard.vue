@@ -31,7 +31,7 @@ const onEdit = () => emits('edit');
 
 <style scoped>
 .completed {
-  opacity: 0.65;
+  opacity: 0.4;
 }
 
 ion-card {
