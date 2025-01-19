@@ -2,13 +2,24 @@ import { ComputedRef, readonly, ref, watch } from 'vue';
 import { useKvStore } from './kvStore';
 import { v1 as uuidv1 } from 'uuid';
 
-type Goal = {
+interface BaseGoal {
   id: string;
   name: string;
   icon?: string;
+}
+
+interface MilestoneGoal extends BaseGoal {
+  type: 'milestone';
   targets: number[];
   records: string[];
-};
+}
+
+interface SimpleGoal extends BaseGoal {
+  type: 'simple';
+  completedAt?: string;
+}
+
+type Goal = MilestoneGoal | SimpleGoal;
 
 const GOAL_KEY = 'goals';
 
@@ -46,12 +57,19 @@ export const useGoals = () => {
   const mock = () => {
     goals.value = [
       {
+        type: 'simple',
         id: uuidv1(),
         name: 'Workout',
-        targets: [1],
-        records: []
+        completedAt: undefined
       },
       {
+        type: 'simple',
+        id: uuidv1(),
+        name: 'Workout 2',
+        completedAt: '2024-04-06'
+      },
+      {
+        type: 'milestone',
         id: uuidv1(),
         name: 'Brush teeth',
         targets: [1, 4, 5],

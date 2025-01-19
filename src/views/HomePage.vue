@@ -3,12 +3,21 @@
     <template #header>
       <IonSearchbar class="px-2 my-0.5" v-model="search" />
     </template>
-    <IonCard v-for="goal of items" :key="goal.id">
+    <div v-for="goal in goals" :key="goal.id">
+      <SimpleGoalCard v-if="goal.type === 'simple'" :name="goal.name" :completed-at="goal.completedAt" />
+      <MilestoneGoalCard v-else-if="goal.type === 'milestone'" :name="goal.name" :targets="goal.targets" :count="goal.records.length" />
+    </div>
+    <!-- <IonCard v-for="goal of items" :key="goal.id">
       <IonCardHeader>
         <IonLabel>{{ goal.count }} / {{ goal.maxTarget }}</IonLabel>
-        <IonLabel class="text-2xl" color="medium">
-          {{ goal.name }}
-        </IonLabel>
+        <div class="flex justify-between">
+          <IonLabel class="text-2xl" color="medium">
+            {{ goal.name }}
+          </IonLabel>
+          <IonButton class="-mr-2" fill="clear">
+            <IonIcon slot="icon-only" :icon="dotsVertical" size="small" color="medium" />
+          </IonButton>
+        </div>
       </IonCardHeader>
       <IonCardContent>
         <div class="flex -ml-3">
@@ -24,34 +33,20 @@
           </IonButton>
         </div>
       </IonCardContent>
-    </IonCard>
+    </IonCard> -->
   </BasePage>
 </template>
 
 <script setup lang="ts">
 import { useGoals } from '@/composables/goals';
 import BasePage from './BasePage.vue';
-import { IonButton, IonCard, IonCardContent, IonCardHeader, IonIcon, IonLabel, IonSearchbar } from '@ionic/vue';
-import { computed, ref } from 'vue';
-import MilestoneIcon from '@/components/MilestoneIcon.vue';
-import { minus, plus } from '@/icons';
+import { IonSearchbar } from '@ionic/vue';
+import { ref } from 'vue';
+import SimpleGoalCard from '@/components/SimpleGoalCard.vue';
+import MilestoneGoalCard from '@/components/MilestoneGoalCard.vue';
 
 const { goals } = useGoals();
 const search = ref('');
-
-const items = computed(() => {
-  return goals.value.map(g => {
-    const count = g.records.length;
-    const maxTarget = Math.max(...g.targets);
-    return {
-      id: g.id,
-      icon: g.icon,
-      name: g.name,
-      count,
-      maxTarget
-    };
-  });
-});
 </script>
 
 <style scoped>
