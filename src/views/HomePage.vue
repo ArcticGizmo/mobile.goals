@@ -20,17 +20,25 @@
         @remove="onRemoveRecord(goal)"
       />
     </div>
+    <IonFab slot="fixed" vertical="bottom" horizontal="end">
+      <IonFabButton @click="onAdd()">
+        <IonIcon :icon="add" />
+      </IonFabButton>
+    </IonFab>
   </BasePage>
 </template>
 
 <script setup lang="ts">
 import { MilestoneGoal, SimpleGoal, useGoals } from '@/composables/goals';
 import BasePage from './BasePage.vue';
-import { IonSearchbar } from '@ionic/vue';
+import { IonFab, IonFabButton, IonIcon, IonSearchbar } from '@ionic/vue';
 import { ref } from 'vue';
 import SimpleGoalCard from '@/components/SimpleGoalCard.vue';
 import MilestoneGoalCard from '@/components/MilestoneGoalCard.vue';
 import { createDateOnly } from '@/composables/dateOnly';
+import { add } from 'ionicons/icons';
+import { createFullscreenModal } from '@/composables/modal';
+import CreateModal from '@/features/create/CreateModal.vue';
 
 const { goals } = useGoals();
 const search = ref('');
@@ -47,6 +55,17 @@ const onAddRecord = (goal: MilestoneGoal) => {
 };
 const onRemoveRecord = (goal: MilestoneGoal) => {
   goal.records.pop();
+};
+
+const onAdd = async () => {
+  const modal = await createFullscreenModal({
+    component: CreateModal
+  });
+  modal.present();
+
+  const resp = await modal.onDidDismiss();
+
+  console.dir(resp);
 };
 </script>
 

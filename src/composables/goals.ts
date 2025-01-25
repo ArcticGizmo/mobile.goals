@@ -20,6 +20,7 @@ export interface SimpleGoal extends BaseGoal {
 }
 
 export type Goal = MilestoneGoal | SimpleGoal;
+export type GoalType = Goal['type'];
 
 const GOAL_KEY = 'goals';
 

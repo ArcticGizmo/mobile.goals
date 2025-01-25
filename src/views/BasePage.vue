@@ -1,13 +1,20 @@
 <template>
   <IonPage :class="{ 'has-toolbar': hasToolbar }">
-    <IonHeader v-if="title || slots['header']">
+    <IonHeader v-if="title || $slots['header-start'] || $slots['header-end']">
       <IonToolbar>
-        <slot name="header">
-          <IonButtons v-if="defaultBackHref" slot="start">
-            <IonBackButton :defaultHref="defaultBackHref" />
-          </IonButtons>
-          <IonTitle>{{ title }}</IonTitle>
-        </slot>
+        <IonButtons slot="start">
+          <slot name="header-start">
+            <IonBackButton v-if="defaultBackHref" color="dark" :defaultHref="defaultBackHref" />
+          </slot>
+        </IonButtons>
+        <IonButtons slot="end">
+          <slot name="header-end">
+            <IonButton v-if="closable" @click="onClose()">
+              <IonIcon slot="icon-only" color="dark" :icon="closeOutline" size="large" />
+            </IonButton>
+          </slot>
+        </IonButtons>
+        <IonTitle color="dark">{{ title }}</IonTitle>
       </IonToolbar>
     </IonHeader>
     <IonLoading :is-open="loading" class="transparent-loading" />
@@ -23,8 +30,21 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonContent, IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton, IonFooter, IonLoading } from '@ionic/vue';
-import { computed, useSlots } from 'vue';
+import {
+  IonPage,
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonBackButton,
+  IonFooter,
+  IonLoading,
+  IonButton,
+  IonIcon
+} from '@ionic/vue';
+import { closeOutline } from 'ionicons/icons';
+import { computed } from 'vue';
 
 const props = defineProps<{
   title?: string;
@@ -32,11 +52,18 @@ const props = defineProps<{
   loading?: boolean;
   maxWidth?: string;
   fixedContentHeight?: boolean;
+  closable?: boolean;
+}>();
+
+const emits = defineEmits<{
+  (e: 'close'): void;
 }>();
 
 const hasToolbar = computed(() => !!props.title);
 
-const slots = useSlots();
+const onClose = () => {
+  emits('close');
+};
 </script>
 
 <style scoped>
