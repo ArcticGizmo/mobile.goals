@@ -1,11 +1,12 @@
 import { ComputedRef, readonly, ref, watch } from 'vue';
 import { useKvStore } from './kvStore';
 import { v1 as uuidv1 } from 'uuid';
+import { SelectableIcon } from '@/components/inputs/iconSelectOptions';
 
 interface BaseGoal {
   id: string;
   name: string;
-  icon?: string;
+  icon?: SelectableIcon;
 }
 
 export interface MilestoneGoal extends BaseGoal {

@@ -4,7 +4,8 @@
     :class="{ 'ion-invalid ion-touched': !!errorMessage }"
     v-model="value"
     :label-placement="labelPlacement || 'stacked'"
-    :fill
+    fill="outline"
+    mode="md"
     :name
     :type
     :placeholder
@@ -30,7 +31,6 @@ const props = defineProps<{
   name: string;
   label?: string;
   labelPlacement?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
-  fill?: 'outline' | 'solid';
   type?: TextFieldTypes;
   placeholder?: string;
   readonly?: boolean;

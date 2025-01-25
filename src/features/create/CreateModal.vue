@@ -1,7 +1,7 @@
 <template>
   <BasePage title="Create Goal" closable @close="onClose">
     <div class="p-4">
-      <SegmentInput v-model="type" :options="TYPES" />
+      <SegmentInput class="mb-4" v-model="type" :options="TYPES" />
       <CreateSimpleGoal v-if="type === 'simple'" />
       <CreateMilestoneGoal v-else-if="type === 'milestone'" />
     </div>

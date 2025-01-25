@@ -1,3 +1,4 @@
+import { SelectableIcon } from '@/components/inputs/iconSelectOptions';
 import { useForm } from 'vee-validate';
 import * as yup from 'yup';
 
@@ -5,6 +6,7 @@ export const useCreateMilestoneForm = () => {
   const schema = yup.object({
     type: yup.string<'milestone'>(),
     name: yup.string().required().label('Name'),
+    icon: yup.string<SelectableIcon>().optional().label('Icon'),
     targets: yup.array<number[]>().required().min(1).label('Target')
   });
 
