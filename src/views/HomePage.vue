@@ -10,6 +10,7 @@
         :completed-at="goal.completedAt"
         @complete="onComplete(goal)"
         @uncomplete="onUncomplete(goal)"
+        @edit="onEditSimpleGoal(goal)"
       />
       <MilestoneGoalCard
         v-else-if="goal.type === 'milestone'"
@@ -33,7 +34,7 @@
 <script setup lang="ts">
 import { MilestoneGoal, SimpleGoal, useGoals } from '@/composables/goals';
 import BasePage from './BasePage.vue';
-import { IonFabButton, IonIcon, IonSearchbar } from '@ionic/vue';
+import { actionSheetController, IonFabButton, IonIcon, IonSearchbar } from '@ionic/vue';
 import { ref } from 'vue';
 import SimpleGoalCard from '@/components/SimpleGoalCard.vue';
 import MilestoneGoalCard from '@/components/MilestoneGoalCard.vue';
@@ -42,7 +43,7 @@ import { add } from 'ionicons/icons';
 import { createFullscreenModal } from '@/composables/modal';
 import CreateModal from '@/features/create/CreateModal.vue';
 
-const { goals } = useGoals();
+const { goals, remove } = useGoals();
 const search = ref('');
 
 const onComplete = (goal: SimpleGoal) => {
@@ -50,6 +51,46 @@ const onComplete = (goal: SimpleGoal) => {
 };
 const onUncomplete = (goal: SimpleGoal) => {
   goal.completedAt = undefined;
+};
+const onEditSimpleGoal = async (goal: SimpleGoal) => {
+  let action;
+  if (goal.completedAt) {
+    action = { text: 'Mark as uncomplete', data: 'uncomplete' };
+  } else {
+    action = { text: 'Mark as complete', data: 'complete' };
+  }
+
+  const sheet = await actionSheetController.create({
+    buttons: [
+      action,
+      {
+        text: 'Delete',
+        role: 'destructive',
+        data: 'delete'
+      },
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        data: 'cancel'
+      }
+    ]
+  });
+
+  sheet.present();
+
+  const resp = await sheet.onWillDismiss();
+
+  if (resp.data === 'delete') {
+    remove(goal.id);
+  }
+
+  if (resp.data === 'uncomplete') {
+    goal.completedAt = undefined;
+  }
+
+  if (resp.data === 'complete') {
+    goal.completedAt = createDateOnly();
+  }
 };
 
 const onAddRecord = (goal: MilestoneGoal) => {

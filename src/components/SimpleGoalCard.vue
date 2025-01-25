@@ -1,10 +1,10 @@
 <template>
-  <BaseGoalCard :name :completed>
-    <div class="flex justify-end">
-      <IonButton v-if="completed" class="no-border" fill="outline" color="success" @click="onUncomplete()">
+  <BaseGoalCard :name :completed @edit="emits('edit')">
+    <div class="flex justify-end -mt-4">
+      <IonButton v-if="completed" class="no-border" fill="outline" color="success" @click="emits('uncomplete')">
         Completed {{ completedAt }}!
       </IonButton>
-      <IonButton v-else fill="outline" color="secondary" @click="onComplete()">Mark Completed</IonButton>
+      <IonButton v-else fill="outline" color="secondary" @click="emits('complete')">Mark Completed</IonButton>
     </div>
   </BaseGoalCard>
 </template>
@@ -16,12 +16,9 @@ import { computed } from 'vue';
 
 const props = defineProps<{ name: string; completedAt?: string }>();
 
-const emits = defineEmits(['complete', 'uncomplete']);
+const emits = defineEmits(['complete', 'uncomplete', 'edit']);
 
 const completed = computed(() => !!props.completedAt);
-
-const onUncomplete = () => emits('uncomplete');
-const onComplete = () => emits('complete');
 </script>
 
 <style scoped>
