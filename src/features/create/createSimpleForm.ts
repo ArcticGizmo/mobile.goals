@@ -13,9 +13,9 @@ export const useCreateSimpleForm = () => {
     icon: yup.string<SelectableIcon>().optional().label('Icon')
   });
 
-  type CreateGoalForm = yup.InferType<typeof schema>;
+  type CreateSimpleGoalForm = yup.InferType<typeof schema>;
 
-  const form = useForm<CreateGoalForm>({
+  const form = useForm<CreateSimpleGoalForm>({
     validationSchema: schema,
     validateOnMount: false,
     initialValues: {
@@ -23,11 +23,12 @@ export const useCreateSimpleForm = () => {
     }
   });
 
-  const create = (values: CreateGoalForm) => {
+  const create = (values: CreateSimpleGoalForm) => {
     add({
       id: generateId(),
       type: 'simple',
-      ...values
+      name: values.name,
+      icon: values.icon
     });
   };
 

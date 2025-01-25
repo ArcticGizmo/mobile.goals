@@ -4,10 +4,7 @@
     <TextInput class="mt-2 ml-4" name="name" label="Name" />
   </div>
 
-  <pre>{{ form.values }}</pre>
-  <pre>{{ form.errors }}</pre>
-
-  <IonButton expand="block" @click="onCreate()">Create</IonButton>
+  <IonButton class="fixed bottom-0 w-full pr-8" @click="onCreate()">Create</IonButton>
 </template>
 
 <script setup lang="ts">

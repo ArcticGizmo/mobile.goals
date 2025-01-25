@@ -28,7 +28,7 @@ const TYPES: SegementOption<GoalType>[] = [
   }
 ];
 
-const type = ref<GoalType>('simple');
+const type = ref<GoalType>('milestone');
 
 const onClose = () => {
   modalController.dismiss();

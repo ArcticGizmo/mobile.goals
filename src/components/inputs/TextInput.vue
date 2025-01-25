@@ -3,7 +3,7 @@
     class="form-input text-input"
     :class="{ 'ion-invalid ion-touched': !!errorMessage }"
     v-model="value"
-    :label-placement="labelPlacement || 'stacked'"
+    label-placement="stacked"
     fill="outline"
     mode="md"
     :name
