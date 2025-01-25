@@ -10,15 +10,13 @@
       </IonButton>
     </div>
     <IonInput
-      v-model="newTarget"
+      v-model="newRecord"
       style="margin-top: -1px"
       :class="{ 'ion-invalid ion-touched': !!errorMessage }"
-      type="number"
-      inputmode="decimal"
-      placeholder="add target"
+      placeholder="add record"
       mode="md"
       fill="outline"
-      @ion-change="onAddNewTarget()"
+      @ion-change="onAddNewRecord()"
     />
 
     <IonText v-if="errorMessage" class="ml-4" color="danger">
@@ -33,30 +31,26 @@ import { InputChangeEventDetail, IonInputCustomEvent } from '@ionic/core';
 import { useField } from 'vee-validate';
 import { close } from 'ionicons/icons';
 import { ref } from 'vue';
+import { parseDateOnly } from '@/composables/dateOnly';
 
 const props = defineProps<{ name: string; label: string }>();
 
-const newTarget = ref<number>();
+const newRecord = ref<string>();
 
 // This typing could be wrong if the type is number, so maybe choose a different one
-const { errorMessage, value, handleChange } = useField<number[]>(() => props.name, undefined, {
+const { errorMessage, value, handleChange } = useField<string[]>(() => props.name, undefined, {
   syncVModel: true,
   validateOnValueUpdate: false
 });
 
-const setValue = (arr: number[]) => {
+const setValue = (arr: string[]) => {
   const deduped = [...new Set(arr)];
-  deduped.sort((a, b) => a - b);
+  deduped.sort((a, b) => a.localeCompare(b));
   handleChange(deduped);
 };
 
 const onChange = (e: IonInputCustomEvent<InputChangeEventDetail>, index: number) => {
-  const v = Number(e.detail.value) || value.value[index];
-
-  if (v <= 0) {
-    onRemove(index);
-    return;
-  }
+  const v = parseDateOnly(e.detail.value || '') || value.value[index];
 
   const newArr = [...value.value];
   newArr[index] = v;
@@ -70,16 +64,15 @@ const onRemove = (index: number) => {
   setValue(newArr);
 };
 
-const onAddNewTarget = () => {
-  const num = Number(newTarget.value);
-  newTarget.value = undefined;
-
-  if (isNaN(num)) {
+const onAddNewRecord = () => {
+  const v = parseDateOnly(newRecord.value || '');
+  newRecord.value = undefined;
+  if (!v) {
     return;
   }
 
   const newArr = [...value.value];
-  newArr.push(num);
+  newArr.push(v);
   setValue(newArr);
 };
 </script>

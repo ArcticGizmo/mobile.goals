@@ -1,16 +1,20 @@
 <template>
   <BasePage title="Edit Goal" closable @close="onClose()">
     <div class="p-4">
+      <!-- TODO: add graph/summary up here -->
+
+
       <div class="flex">
         <IconInput name="icon" />
         <TextInput class="mt-2 ml-4" name="name" label="Name" />
       </div>
 
       <TargetsInput class="mt-4" name="targets" label="Your Targets" />
+      <RecordsInput class="mt-4" name="records" label="Your Records" />
 
       <IonButton class="fixed bottom-0 w-full pr-8" @click="onUpdate()">Update</IonButton>
-    </div></BasePage
-  >
+    </div>
+  </BasePage>
 </template>
 
 <script setup lang="ts">
@@ -22,6 +26,7 @@ import { IonButton, modalController } from '@ionic/vue';
 import { useEditMilestoneForm } from './editMilestoneForm';
 import { MilestoneGoal } from '@/composables/goals';
 import { onMounted } from 'vue';
+import RecordsInput from '@/components/inputs/RecordsInput.vue';
 
 const props = defineProps<{ initial: MilestoneGoal }>();
 
