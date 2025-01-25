@@ -18,8 +18,8 @@ import TargetsInput from '@/components/inputs/TargetsInput.vue';
 
 const { create, form } = useCreateMilestoneForm();
 
-const onCreate = form.handleSubmit(values => {
-  create(values);
+const onCreate = form.handleSubmit(async values => {
+  await create(values);
   modalController.dismiss();
 });
 </script>

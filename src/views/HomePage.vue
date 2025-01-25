@@ -1,5 +1,5 @@
 <template>
-  <BasePage title="Home" max-width="500px">
+  <BasePage title="My Goals" max-width="500px">
     <template #header>
       <IonSearchbar class="px-2 my-0.5" v-model="search" />
     </template>
@@ -19,6 +19,7 @@
         :count="goal.records.length"
         @add="onAddRecord(goal)"
         @remove="onRemoveRecord(goal)"
+        @edit="onEditMilestoneGoal(goal)"
       />
     </div>
     <div class="fixed bottom-2 right-2">
@@ -42,6 +43,7 @@ import { createDateOnly } from '@/composables/dateOnly';
 import { add } from 'ionicons/icons';
 import { createFullscreenModal } from '@/composables/modal';
 import CreateModal from '@/features/create/CreateModal.vue';
+import EditMilestoneGoalModal from '@/features/edit/EditMilestoneGoalModal.vue';
 
 const { goals, remove } = useGoals();
 const search = ref('');
@@ -106,9 +108,46 @@ const onAdd = async () => {
   });
   modal.present();
 
-  const resp = await modal.onDidDismiss();
+  await modal.onDidDismiss();
+};
 
-  console.dir(resp);
+const onEditMilestoneGoal = async (goal: MilestoneGoal) => {
+  const sheet = await actionSheetController.create({
+    buttons: [
+      {
+        text: 'Edit',
+        data: 'edit'
+      },
+      {
+        text: 'Delete',
+        role: 'destructive',
+        data: 'delete'
+      },
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        data: 'cancel'
+      }
+    ]
+  });
+
+  sheet.present();
+
+  const resp = await sheet.onWillDismiss();
+
+  if (resp.data === 'delete') {
+    remove(goal.id);
+  }
+
+  if (resp.data === 'edit') {
+    const modal = await createFullscreenModal({
+      component: EditMilestoneGoalModal,
+      componentProps: { initial: goal }
+    });
+    modal.present();
+
+    await modal.onWillDismiss();
+  }
 };
 </script>
 

@@ -8,10 +8,9 @@ export const useCreateMilestoneForm = () => {
   const { add } = useGoals();
 
   const schema = yup.object({
-    type: yup.string<'milestone'>(),
     name: yup.string().required().label('Name'),
     icon: yup.string<SelectableIcon>().optional().label('Icon'),
-    targets: yup.array<number[]>().required().min(1).label('Target')
+    targets: yup.array<number[]>().required().min(1).label('Targets')
   });
 
   type CreateMilestoneGoalForm = yup.InferType<typeof schema>;
@@ -25,7 +24,7 @@ export const useCreateMilestoneForm = () => {
     }
   });
 
-  const create = (values: CreateMilestoneGoalForm) => {
+  const create = async (values: CreateMilestoneGoalForm) => {
     add({
       id: generateId(),
       type: 'milestone',

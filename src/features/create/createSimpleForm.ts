@@ -8,7 +8,6 @@ export const useCreateSimpleForm = () => {
   const { add } = useGoals();
 
   const schema = yup.object({
-    type: yup.string<'simple'>(),
     name: yup.string().required().label('Name'),
     icon: yup.string<SelectableIcon>().optional().label('Icon')
   });
@@ -23,7 +22,7 @@ export const useCreateSimpleForm = () => {
     }
   });
 
-  const create = (values: CreateSimpleGoalForm) => {
+  const create = async (values: CreateSimpleGoalForm) => {
     add({
       id: generateId(),
       type: 'simple',

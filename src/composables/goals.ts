@@ -52,6 +52,15 @@ const remove = async (id: string) => {
 const set = async (newGoals: Goal[]) => {
   goals.value = [...newGoals];
 };
+
+const replace = async (goal: Goal) => {
+  const index = goals.value.findIndex(x => x.id === goal.id);
+
+  if (index > -1) {
+    goals.value[index] = goal;
+  }
+};
+
 /* load on app start because this is all the app does */
 initialLoad();
 
@@ -82,5 +91,5 @@ export const useGoals = () => {
 
   const clear = () => set([]);
 
-  return { goals: readonly(goals) as ComputedRef<Goal[]>, add, remove, set, clear, mock };
+  return { goals: readonly(goals) as ComputedRef<Goal[]>, add, remove, set, clear, replace, mock };
 };

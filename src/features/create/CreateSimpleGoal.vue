@@ -15,8 +15,8 @@ import { IonButton, modalController } from '@ionic/vue';
 
 const { create, form } = useCreateSimpleForm();
 
-const onCreate = form.handleSubmit(values => {
-  create(values);
+const onCreate = form.handleSubmit(async values => {
+  await create(values);
   modalController.dismiss();
 });
 </script>

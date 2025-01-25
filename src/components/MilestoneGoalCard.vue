@@ -1,5 +1,5 @@
 <template>
-  <BaseGoalCard :name :completed>
+  <BaseGoalCard :name :completed @edit="emits('edit')">
     <template #subtitle>
       <IonLabel>{{ count || 0 }} / {{ max }}</IonLabel>
     </template>
@@ -7,10 +7,10 @@
       <MilestoneIcon v-for="target of sortedTargets" :key="target" :count="target" :complete="count >= target" />
     </div>
     <div class="flex justify-end w-full">
-      <IonButton class="w-20" size="large" fill="clear" @click="onRemoveRecord()">
+      <IonButton class="w-20" size="large" fill="clear" @click="emits('remove')">
         <IonIcon slot="icon-only" :icon="minus" color="danger" />
       </IonButton>
-      <IonButton class="w-20" size="large" fill="outline" color="secondary" @click="onAddRecord()">
+      <IonButton class="w-20" size="large" fill="outline" color="secondary" @click="emits('add')">
         <IonIcon slot="icon-only" :icon="plus" />
       </IonButton>
     </div>
@@ -26,14 +26,11 @@ import { minus, plus } from '@/icons';
 
 const props = defineProps<{ name: string; targets: number[]; count: number }>();
 
-const emits = defineEmits(['add', 'remove']);
+const emits = defineEmits(['add', 'remove', 'edit']);
 
 const max = computed(() => Math.max(...props.targets));
 const sortedTargets = computed(() => [...props.targets].sort((a, b) => a - b));
 const completed = computed(() => props.count >= max.value);
-
-const onRemoveRecord = () => emits('remove');
-const onAddRecord = () => emits('add');
 </script>
 
 <style scoped>
