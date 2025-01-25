@@ -20,18 +20,20 @@
         @remove="onRemoveRecord(goal)"
       />
     </div>
-    <IonFab slot="fixed" vertical="bottom" horizontal="end">
+    <div class="fixed bottom-2 right-2">
       <IonFabButton @click="onAdd()">
         <IonIcon :icon="add" />
       </IonFabButton>
-    </IonFab>
+    </div>
+    <!-- bottom padding for scroll -->
+    <div style="height: 2rem"></div>
   </BasePage>
 </template>
 
 <script setup lang="ts">
 import { MilestoneGoal, SimpleGoal, useGoals } from '@/composables/goals';
 import BasePage from './BasePage.vue';
-import { IonFab, IonFabButton, IonIcon, IonSearchbar } from '@ionic/vue';
+import { IonFabButton, IonIcon, IonSearchbar } from '@ionic/vue';
 import { ref } from 'vue';
 import SimpleGoalCard from '@/components/SimpleGoalCard.vue';
 import MilestoneGoalCard from '@/components/MilestoneGoalCard.vue';

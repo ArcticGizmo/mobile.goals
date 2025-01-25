@@ -1,8 +1,12 @@
 import { SelectableIcon } from '@/components/inputs/iconSelectOptions';
+import { useGoals } from '@/composables/goals';
+import { generateId } from '@/composables/identifier';
 import { useForm } from 'vee-validate';
 import * as yup from 'yup';
 
 export const useCreateSimpleForm = () => {
+  const { add } = useGoals();
+
   const schema = yup.object({
     type: yup.string<'simple'>(),
     name: yup.string().required().label('Name'),
@@ -19,10 +23,13 @@ export const useCreateSimpleForm = () => {
     }
   });
 
-  const create = form.handleSubmit(values => {
-    // save some stuff or something
-    console.dir(values);
-  });
+  const create = (values: CreateGoalForm) => {
+    add({
+      id: generateId(),
+      type: 'simple',
+      ...values
+    });
+  };
 
   return { create, form };
 };

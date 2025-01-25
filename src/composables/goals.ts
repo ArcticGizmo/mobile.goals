@@ -1,7 +1,7 @@
 import { ComputedRef, readonly, ref, watch } from 'vue';
 import { useKvStore } from './kvStore';
-import { v1 as uuidv1 } from 'uuid';
 import { SelectableIcon } from '@/components/inputs/iconSelectOptions';
+import { generateId } from './identifier';
 
 interface BaseGoal {
   id: string;
@@ -60,19 +60,19 @@ export const useGoals = () => {
     goals.value = [
       {
         type: 'simple',
-        id: uuidv1(),
+        id: generateId(),
         name: 'Workout',
         completedAt: undefined
       },
       {
         type: 'simple',
-        id: uuidv1(),
+        id: generateId(),
         name: 'Workout 2',
         completedAt: '2024-04-06'
       },
       {
         type: 'milestone',
-        id: uuidv1(),
+        id: generateId(),
         name: 'Brush teeth',
         targets: [1, 4, 5],
         records: ['2022-05-01', '2022-06-01']

@@ -19,7 +19,7 @@
     </IonHeader>
     <IonLoading :is-open="loading" class="transparent-loading" />
     <IonContent>
-      <div class="content" :class="{ 'h-full': fixedContentHeight }" :style="{ maxWidth }">
+      <div class="content bacon" :class="{ 'h-full': fixedContentHeight }" :style="{ maxWidth }">
         <slot></slot>
       </div>
     </IonContent>
