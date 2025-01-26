@@ -68,7 +68,7 @@ const { goals, remove, loading } = useGoals();
 const dense = ref(false);
 const search = ref('');
 
-const filter = ref<Filter>();
+const filter = ref<Filter | undefined>('incomplete');
 const toggleFilter = (value: Filter) => {
   if (filter.value === value) {
     filter.value = undefined;
