@@ -3,7 +3,7 @@
     <div class="p-4">
       <div class="flex">
         <IconInput name="icon" />
-        <TextInput class="mt-2 ml-4" name="name" label="Name" />
+        <TextInput class="mt-2 ml-4" name="name" label="Name" autocapitalize="sentences" autocorrect />
       </div>
 
       <BooleanInput class="mt-4" name="completed" label="Completed" true-text="Yes" false-text="No" />

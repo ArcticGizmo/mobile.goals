@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <IconInput name="icon" />
-    <TextInput class="mt-2 ml-4" name="name" label="Name" />
+    <TextInput class="mt-2 ml-4" name="name" label="Name" autocapitalize="sentences" autocorrect />
   </div>
 
   <IonButton class="fixed bottom-0 w-full pr-8" @click="onCreate()">Create</IonButton>

@@ -6,10 +6,12 @@
     label-placement="stacked"
     fill="outline"
     mode="md"
+    :autocapitalize
     :name
     :type
     :placeholder
     :readonly
+    :autocorrect="autocorrect ? 'on' : 'off'"
     :error-text="errorMessage"
     @change="handleChange"
   >
@@ -35,10 +37,10 @@ const props = defineProps<{
   placeholder?: string;
   readonly?: boolean;
   required?: boolean;
-  onDarkBackground?: boolean;
+  autocapitalize?: 'off' | 'none' | 'on' | 'sentences' | 'words' | 'characters';
+  autocorrect?: boolean;
 }>();
 
-// This typing could be wrong if the type is number, so maybe choose a different one
 const { errorMessage, value, handleChange } = useField<string>(() => props.name, undefined, {
   syncVModel: true,
   validateOnValueUpdate: false

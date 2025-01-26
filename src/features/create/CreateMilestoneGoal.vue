@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <IconInput name="icon" />
-    <TextInput class="mt-2 ml-4" name="name" label="Name" />
+    <TextInput class="mt-2 ml-4" name="name" label="Name" autocapitalize="sentences" autocorrect />
   </div>
 
   <TargetsInput class="mt-4" name="targets" label="Your Targets" />
