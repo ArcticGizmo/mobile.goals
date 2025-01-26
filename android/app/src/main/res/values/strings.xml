@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">Goals</string>
-    <string name="title_activity_main">mobile.goals</string>
+    <string name="title_activity_main">Goals</string>
     <string name="package_name">io.arcticgizmo.goals</string>
     <string name="custom_url_scheme">io.arcticgizmo.goals</string>
 </resources>
