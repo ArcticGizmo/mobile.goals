@@ -18,6 +18,7 @@
         v-if="goal.type === 'simple'"
         :name="goal.name"
         :completed-at="goal.completedAt"
+        :icon="goal.icon"
         :dense
         @complete="onComplete(goal)"
         @uncomplete="onUncomplete(goal)"
@@ -26,6 +27,7 @@
       <MilestoneGoalCard
         v-else-if="goal.type === 'milestone'"
         :name="goal.name"
+        :icon="goal.icon"
         :targets="goal.targets"
         :count="goal.records.length"
         :dense

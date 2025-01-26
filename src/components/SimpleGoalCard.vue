@@ -1,5 +1,5 @@
 <template>
-  <BaseGoalCard :name :completed :dense @edit="emits('edit')">
+  <BaseGoalCard :name :completed :dense :icon @edit="emits('edit')">
     <div class="flex justify-end -mt-4">
       <IonButton v-if="completed" class="no-border" fill="outline" color="success" @click="emits('uncomplete')">
         Completed {{ completedAt }}!
@@ -14,7 +14,7 @@ import { IonButton } from '@ionic/vue';
 import BaseGoalCard from './BaseGoalCard.vue';
 import { computed } from 'vue';
 
-const props = defineProps<{ name: string; completedAt?: string, dense?: boolean }>();
+const props = defineProps<{ name: string; icon?: string, completedAt?: string, dense?: boolean }>();
 
 const emits = defineEmits(['complete', 'uncomplete', 'edit']);
 

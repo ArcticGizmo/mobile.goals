@@ -5,9 +5,9 @@
 
       <div class="flex justify-between">
         <IonLabel class="text-2xl" color="medium">
-          {{ name }}
+          <IonIcon v-if="actualIcon" class="-ml-2" :icon="actualIcon" size="small" color="medium" /> {{ name }}
         </IonLabel>
-        <IonButton class="-mr-2" fill="clear" @click="onEdit()">
+        <IonButton class="-mr-2" fill="clear" @click="emits('edit')">
           <IonIcon slot="icon-only" :icon="dotsVertical" size="small" color="medium" />
         </IonButton>
       </div>
@@ -21,12 +21,14 @@
 <script setup lang="ts">
 import { dotsVertical } from '@/icons';
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonIcon, IonLabel } from '@ionic/vue';
+import { computed } from 'vue';
+import { ICON_OPTIONS } from './inputs/iconSelectOptions';
 
-defineProps<{ name: string; completed: boolean; dense?: boolean }>();
+const props = defineProps<{ name: string; icon?: string; completed: boolean; dense?: boolean }>();
 
 const emits = defineEmits(['edit']);
 
-const onEdit = () => emits('edit');
+const actualIcon = computed(() => ICON_OPTIONS.find(x => x.value === props.icon)?.icon);
 </script>
 
 <style scoped>

@@ -1,5 +1,5 @@
 <template>
-  <BaseGoalCard :name :completed :dense @edit="emits('edit')">
+  <BaseGoalCard :name :completed :icon :dense @edit="emits('edit')">
     <template #subtitle>
       <IonLabel>{{ count || 0 }} / {{ max }}</IonLabel>
     </template>
@@ -24,7 +24,7 @@ import { computed } from 'vue';
 import MilestoneIcon from './MilestoneIcon.vue';
 import { minus, plus } from '@/icons';
 
-const props = defineProps<{ name: string; targets: number[]; count: number; dense?: boolean }>();
+const props = defineProps<{ name: string; icon?: string; targets: number[]; count: number; dense?: boolean }>();
 
 const emits = defineEmits(['add', 'remove', 'edit']);
 
