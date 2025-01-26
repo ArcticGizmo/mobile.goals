@@ -1,6 +1,7 @@
 <template>
   <IonSegment
     v-model="model"
+    class="h-10"
     :class="{ readonly }"
     :aria-readonly="readonly"
     :swipe-gesture="false"

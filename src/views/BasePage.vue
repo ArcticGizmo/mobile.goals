@@ -1,7 +1,15 @@
 <template>
   <IonPage :class="{ 'has-toolbar': hasToolbar }">
-    <IonHeader v-if="title || $slots['header-start'] || $slots['header-end']">
-      <IonToolbar>
+    <IonHeader v-if="title || $slots['header'] || $slots['header-start'] || $slots['header-end']">
+      <IonToolbar v-if="$slots['header']">
+        <slot name="header">
+          <IonButtons v-if="defaultBackHref" slot="start">
+            <IonBackButton :defaultHref="defaultBackHref" />
+          </IonButtons>
+          <IonTitle>{{ title }}</IonTitle>
+        </slot>
+      </IonToolbar>
+      <IonToolbar v-else>
         <IonButtons slot="start">
           <slot name="header-start">
             <IonBackButton v-if="defaultBackHref" color="dark" :defaultHref="defaultBackHref" />
@@ -19,7 +27,7 @@
     </IonHeader>
     <IonLoading :is-open="loading" class="transparent-loading" />
     <IonContent>
-      <div class="content bacon" :class="{ 'h-full': fixedContentHeight }" :style="{ maxWidth }">
+      <div class="content" :class="{ 'h-full': fixedContentHeight }" :style="{ maxWidth }">
         <slot></slot>
       </div>
     </IonContent>

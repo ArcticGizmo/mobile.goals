@@ -1,9 +1,9 @@
 <template>
-  <BasePage title="My Goals" max-width="500px">
+  <BasePage max-width="500px">
     <template #header>
       <IonSearchbar class="px-2 my-0.5" v-model="search" />
     </template>
-    <div v-for="goal in goals" :key="goal.id">
+    <div v-for="goal in filteredGoals" :key="goal.id">
       <SimpleGoalCard
         v-if="goal.type === 'simple'"
         :name="goal.name"
@@ -22,8 +22,16 @@
         @edit="onEditMilestoneGoal(goal)"
       />
     </div>
+    <div v-if="!goals.length" class="mt-10 text-center">
+      <IonButton class="mt-4" @click="onCreate()">Create your first goal!</IonButton>
+    </div>
+    <div v-else-if="!filteredGoals.length" class="p-4 mt-10 text-center">
+      <div>No matches found.</div>
+      <IonButton class="mt-4" fill="outline" @click="search = ''">Clear search</IonButton>
+    </div>
+
     <div class="fixed bottom-2 right-2">
-      <IonFabButton @click="onAdd()">
+      <IonFabButton @click="onCreate()">
         <IonIcon :icon="add" />
       </IonFabButton>
     </div>
@@ -35,8 +43,8 @@
 <script setup lang="ts">
 import { MilestoneGoal, SimpleGoal, useGoals } from '@/composables/goals';
 import BasePage from './BasePage.vue';
-import { actionSheetController, alertController, IonFabButton, IonIcon, IonSearchbar } from '@ionic/vue';
-import { ref } from 'vue';
+import { actionSheetController, alertController, IonButton, IonFabButton, IonIcon, IonSearchbar } from '@ionic/vue';
+import { computed, ref } from 'vue';
 import SimpleGoalCard from '@/components/SimpleGoalCard.vue';
 import MilestoneGoalCard from '@/components/MilestoneGoalCard.vue';
 import { createDateOnly } from '@/composables/dateOnly';
@@ -45,9 +53,14 @@ import { createFullscreenModal } from '@/composables/modal';
 import CreateModal from '@/features/create/CreateModal.vue';
 import EditMilestoneGoalModal from '@/features/edit/EditMilestoneGoalModal.vue';
 import EditSimpleGoalModal from '@/features/edit/EditSimpleGoalModal.vue';
+import { sort } from '@/composables/sort';
 
 const { goals, remove } = useGoals();
 const search = ref('');
+
+const filteredGoals = computed(() => {
+  return sort(goals.value, 'name', search.value);
+});
 
 const confirmDelete = async (id: string) => {
   const alert = await alertController.create({
@@ -124,7 +137,7 @@ const onRemoveRecord = (goal: MilestoneGoal) => {
   goal.records.pop();
 };
 
-const onAdd = async () => {
+const onCreate = async () => {
   const modal = await createFullscreenModal({
     component: CreateModal
   });

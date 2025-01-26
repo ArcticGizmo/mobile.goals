@@ -1,7 +1,8 @@
 <template>
   <BasePage title="Create Goal" closable @close="onClose">
     <div class="p-4">
-      <SegmentInput class="mb-4" v-model="type" :options="TYPES" />
+      <SegmentInput v-model="type" :options="TYPES" />
+      <LineSeparator />
       <CreateSimpleGoal v-if="type === 'simple'" />
       <CreateMilestoneGoal v-else-if="type === 'milestone'" />
     </div>
@@ -16,6 +17,7 @@ import { GoalType } from '@/composables/goals';
 import { ref } from 'vue';
 import CreateSimpleGoal from './CreateSimpleGoal.vue';
 import CreateMilestoneGoal from './CreateMilestoneGoal.vue';
+import LineSeparator from '@/components/LineSeparator.vue';
 
 const TYPES: SegementOption<GoalType>[] = [
   {
