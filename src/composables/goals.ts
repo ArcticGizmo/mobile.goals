@@ -27,6 +27,7 @@ const GOAL_KEY = 'goals';
 const kvStore = useKvStore();
 
 const goals = ref<Goal[]>([]);
+const loading = ref(true);
 
 watch(
   goals,
@@ -40,6 +41,7 @@ watch(
 const initialLoad = async () => {
   const data = await kvStore.loadJson<Goal[]>(GOAL_KEY);
   goals.value = data || [];
+  loading.value = false;
 };
 
 const add = async (goal: Goal) => {
@@ -70,5 +72,5 @@ initialLoad();
 export const useGoals = () => {
   const clear = () => set([]);
 
-  return { goals: readonly(goals) as ComputedRef<Goal[]>, add, remove, set, clear, replace };
+  return { goals: readonly(goals) as ComputedRef<Goal[]>, add, remove, set, clear, replace, loading };
 };

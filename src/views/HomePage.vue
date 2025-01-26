@@ -1,5 +1,5 @@
 <template>
-  <BasePage max-width="500px">
+  <BasePage :loading max-width="500px">
     <template #header>
       <div class="flex">
         <IonSearchbar class="px-2 -mr-2 my-0.5" v-model="search" />
@@ -64,7 +64,7 @@ import { starEmpty, star, dense as denseIcon } from '@/icons';
 
 type Filter = 'complete' | 'incomplete';
 
-const { goals, remove } = useGoals();
+const { goals, remove, loading } = useGoals();
 const dense = ref(false);
 const search = ref('');
 
