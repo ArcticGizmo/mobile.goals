@@ -12,9 +12,10 @@ import airplane from '@mdi/svg/svg/airplane.svg';
 import ticket from '@mdi/svg/svg/ticket.svg';
 import forest from '@mdi/svg/svg/forest.svg';
 
-import { book, star } from 'ionicons/icons';
+import { add, book, star, starHalfOutline as starHalf, starOutline as starEmpty } from 'ionicons/icons';
 
 export {
+  add,
   bullseyeArrow,
   progressStar,
   plus,
@@ -29,5 +30,7 @@ export {
   book,
   ticket,
   forest,
-  star
+  star,
+  starHalf,
+  starEmpty
 };

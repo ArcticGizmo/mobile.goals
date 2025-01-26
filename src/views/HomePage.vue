@@ -2,6 +2,10 @@
   <BasePage max-width="500px">
     <template #header>
       <IonSearchbar class="px-2 my-0.5" v-model="search" />
+      <div class="mx-2 mb-1">
+        <FilterItem :icon="star" text="Completed" :model-value="filter === 'complete'" @click="toggleFilter('complete')" />
+        <FilterItem :icon="starEmpty" text="Incomplete" :model-value="filter === 'incomplete'" @click="toggleFilter('incomplete')" />
+      </div>
     </template>
     <div v-for="goal in filteredGoals" :key="goal.id">
       <SimpleGoalCard
@@ -27,7 +31,7 @@
     </div>
     <div v-else-if="!filteredGoals.length" class="p-4 mt-10 text-center">
       <div>No matches found.</div>
-      <IonButton class="mt-4" fill="outline" @click="search = ''">Clear search</IonButton>
+      <IonButton class="mt-4" fill="outline" @click="onResetFilters()">Clear filters</IonButton>
     </div>
 
     <div class="fixed bottom-2 right-2">
@@ -41,25 +45,68 @@
 </template>
 
 <script setup lang="ts">
-import { MilestoneGoal, SimpleGoal, useGoals } from '@/composables/goals';
+import { Goal, MilestoneGoal, SimpleGoal, useGoals } from '@/composables/goals';
 import BasePage from './BasePage.vue';
 import { actionSheetController, alertController, IonButton, IonFabButton, IonIcon, IonSearchbar } from '@ionic/vue';
 import { computed, ref } from 'vue';
 import SimpleGoalCard from '@/components/SimpleGoalCard.vue';
 import MilestoneGoalCard from '@/components/MilestoneGoalCard.vue';
 import { createDateOnly } from '@/composables/dateOnly';
-import { add } from 'ionicons/icons';
 import { createFullscreenModal } from '@/composables/modal';
 import CreateModal from '@/features/create/CreateModal.vue';
 import EditMilestoneGoalModal from '@/features/edit/EditMilestoneGoalModal.vue';
 import EditSimpleGoalModal from '@/features/edit/EditSimpleGoalModal.vue';
 import { sort } from '@/composables/sort';
+import FilterItem from '@/components/FilterItem.vue';
+import { starEmpty, add, star } from '@/icons';
+
+type Filter = 'complete' | 'incomplete';
 
 const { goals, remove } = useGoals();
 const search = ref('');
 
+const filter = ref<Filter>();
+const toggleFilter = (value: Filter) => {
+  if (filter.value === value) {
+    filter.value = undefined;
+  } else {
+    filter.value = value;
+  }
+};
+
+const onResetFilters = () => {
+  search.value = '';
+  filter.value = undefined;
+};
+
+const isGoalComplete = (goal: Goal) => {
+  if (goal.type === 'simple') {
+    return !!goal.completedAt;
+  }
+
+  if (goal.type === 'milestone') {
+    const biggestTarget = Math.max(...goal.targets);
+    return goal.records.length >= biggestTarget;
+  }
+
+  console.error('unknown goal type', goal);
+  return false;
+};
+
 const filteredGoals = computed(() => {
-  return sort(goals.value, 'name', search.value);
+  const items = goals.value.filter(x => {
+    const isComplete = isGoalComplete(x);
+    switch (filter.value) {
+      case 'complete':
+        return isComplete;
+      case 'incomplete':
+        return !isComplete;
+      default:
+        return true;
+    }
+  });
+
+  return sort(items, 'name', search.value);
 });
 
 const confirmDelete = async (id: string) => {
