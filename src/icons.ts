@@ -11,8 +11,14 @@ import cash from '@mdi/svg/svg/cash.svg';
 import airplane from '@mdi/svg/svg/airplane.svg';
 import ticket from '@mdi/svg/svg/ticket.svg';
 import forest from '@mdi/svg/svg/forest.svg';
+import social from '@mdi/svg/svg/account-multiple.svg';
+import music from '@mdi/svg/svg/music.svg';
+import controller from '@mdi/svg/svg/controller.svg';
+import server from '@mdi/svg/svg/server.svg';
+import paw from '@mdi/svg/svg/paw.svg';
+import food from '@mdi/svg/svg/food.svg';
 
-import { add, book, star, starHalfOutline as starHalf, starOutline as starEmpty } from 'ionicons/icons';
+import { add, home, settings, book, star, starHalfOutline as starHalf, starOutline as starEmpty } from 'ionicons/icons';
 
 export {
   add,
@@ -32,5 +38,13 @@ export {
   forest,
   star,
   starHalf,
-  starEmpty
+  starEmpty,
+  social,
+  music,
+  controller,
+  server,
+  home,
+  settings,
+  paw,
+  food
 };

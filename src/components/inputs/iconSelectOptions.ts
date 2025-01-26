@@ -1,4 +1,22 @@
-import { airplane, book, cash, chefHat, forest, learn, run, star, ticket, weightLifter } from '@/icons';
+import {
+  airplane,
+  book,
+  cash,
+  chefHat,
+  controller,
+  food,
+  forest,
+  home,
+  learn,
+  music,
+  paw,
+  run,
+  server,
+  social,
+  star,
+  ticket,
+  weightLifter
+} from '@/icons';
 
 export type IconOption = {
   value: string;
@@ -45,6 +63,34 @@ export const ICON_OPTIONS = [
   {
     value: 'forest',
     icon: forest
+  },
+  {
+    value: 'social',
+    icon: social
+  },
+  {
+    value: 'music',
+    icon: music
+  },
+  {
+    value: 'game',
+    icon: controller
+  },
+  {
+    value: 'tech',
+    icon: server
+  },
+  {
+    value: 'home',
+    icon: home
+  },
+  {
+    value: 'pet',
+    icon: paw
+  },
+  {
+    value: 'good',
+    icon: food
   }
 ] as const;
 

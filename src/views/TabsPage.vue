@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { openCreateGoalModal } from '@/composables/modal';
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet, IonFabButton } from '@ionic/vue';
-import { settings, home, add } from 'ionicons/icons';
+import { settings, home, add } from '@/icons';
 </script>
 
 <style>
