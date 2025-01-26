@@ -4,7 +4,7 @@ import { useForm } from 'vee-validate';
 import * as yup from 'yup';
 
 export const useEditMilestoneForm = () => {
-  const { replace } = useGoals();
+  const { replace, remove: removeGoal } = useGoals();
 
   const schema = yup.object({
     id: yup.string().required(),
@@ -42,5 +42,9 @@ export const useEditMilestoneForm = () => {
     });
   };
 
-  return { update, form, initialise };
+  const remove = async () => {
+    await removeGoal(form.values.id);
+  };
+
+  return { update, form, initialise, remove };
 };

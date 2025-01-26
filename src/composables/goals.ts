@@ -31,7 +31,7 @@ const goals = ref<Goal[]>([]);
 watch(
   goals,
   async g => {
-    console.log('[goals] saving to disk');
+    console.debug('[goals] saving to disk');
     await kvStore.saveJson<Goal[]>(GOAL_KEY, g);
   },
   { deep: true }

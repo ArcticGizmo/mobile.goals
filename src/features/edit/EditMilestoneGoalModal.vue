@@ -11,7 +11,10 @@
       <TargetsInput class="mt-4" name="targets" label="Your Targets" />
       <RecordsInput class="mt-4" name="records" label="Your Records" />
 
-      <IonButton class="fixed bottom-0 w-full pr-8" @click="onUpdate()">Update</IonButton>
+      <div class="actions fixed left-0 bottom-0 w-full px-4">
+        <IonButton class="mb-4" expand="block" @click="onUpdate()">Update</IonButton>
+        <IonButton expand="block" fill="outline" color="danger" @click="onDelete()">Delete</IonButton>
+      </div>
     </div>
   </BasePage>
 </template>
@@ -21,7 +24,7 @@ import IconInput from '@/components/inputs/IconInput.vue';
 import TargetsInput from '@/components/inputs/TargetsInput.vue';
 import TextInput from '@/components/inputs/TextInput.vue';
 import BasePage from '@/views/BasePage.vue';
-import { IonButton, modalController } from '@ionic/vue';
+import { alertController, IonButton, modalController } from '@ionic/vue';
 import { useEditMilestoneForm } from './editMilestoneForm';
 import { MilestoneGoal } from '@/composables/goals';
 import { onMounted } from 'vue';
@@ -33,7 +36,7 @@ onMounted(() => {
   initialise(props.initial);
 });
 
-const { initialise, form, update } = useEditMilestoneForm();
+const { initialise, form, update, remove } = useEditMilestoneForm();
 
 const onClose = () => modalController.dismiss();
 
@@ -41,4 +44,26 @@ const onUpdate = form.handleSubmit(async values => {
   await update(values);
   onClose();
 });
+
+const onDelete = async () => {
+  const alert = await alertController.create({
+    header: 'Delete goal forever?',
+    buttons: [
+      {
+        text: 'cancel',
+        role: 'cancel'
+      },
+      {
+        text: 'Delete',
+        role: 'destructive',
+        handler: async () => {
+          await remove();
+          onClose();
+        }
+      }
+    ]
+  });
+  alert.present();
+  await alert.onWillDismiss();
+};
 </script>
