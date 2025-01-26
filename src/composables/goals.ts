@@ -1,7 +1,6 @@
 import { ComputedRef, readonly, ref, watch } from 'vue';
 import { useKvStore } from './kvStore';
 import { SelectableIcon } from '@/components/inputs/iconSelectOptions';
-import { generateId } from './identifier';
 
 interface BaseGoal {
   id: string;
@@ -29,9 +28,14 @@ const kvStore = useKvStore();
 
 const goals = ref<Goal[]>([]);
 
-watch(goals, async g => {
-  await kvStore.saveJson<Goal[]>(GOAL_KEY, g);
-});
+watch(
+  goals,
+  async g => {
+    console.log('[goals] saving to disk');
+    await kvStore.saveJson<Goal[]>(GOAL_KEY, g);
+  },
+  { deep: true }
+);
 
 const initialLoad = async () => {
   const data = await kvStore.loadJson<Goal[]>(GOAL_KEY);
@@ -45,8 +49,7 @@ const add = async (goal: Goal) => {
 };
 
 const remove = async (id: string) => {
-  const updatedGoals = goals.value.filter(x => x.id !== id);
-  goals.value = updatedGoals;
+  goals.value = goals.value.filter(x => x.id !== id);
 };
 
 const set = async (newGoals: Goal[]) => {
@@ -65,31 +68,7 @@ const replace = async (goal: Goal) => {
 initialLoad();
 
 export const useGoals = () => {
-  const mock = () => {
-    goals.value = [
-      {
-        type: 'simple',
-        id: generateId(),
-        name: 'Workout',
-        completedAt: undefined
-      },
-      {
-        type: 'simple',
-        id: generateId(),
-        name: 'Workout 2',
-        completedAt: '2024-04-06'
-      },
-      {
-        type: 'milestone',
-        id: generateId(),
-        name: 'Brush teeth',
-        targets: [1, 4, 5],
-        records: ['2022-05-01', '2022-06-01']
-      }
-    ];
-  };
-
   const clear = () => set([]);
 
-  return { goals: readonly(goals) as ComputedRef<Goal[]>, add, remove, set, clear, replace, mock };
+  return { goals: readonly(goals) as ComputedRef<Goal[]>, add, remove, set, clear, replace };
 };

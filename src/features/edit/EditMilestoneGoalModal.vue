@@ -3,7 +3,6 @@
     <div class="p-4">
       <!-- TODO: add graph/summary up here -->
 
-
       <div class="flex">
         <IconInput name="icon" />
         <TextInput class="mt-2 ml-4" name="name" label="Name" />
