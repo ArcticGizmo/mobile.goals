@@ -2,10 +2,10 @@
   <IonSegment
     v-model="model"
     :class="{ readonly }"
-    @ionChange="(e: any) => onChange(e.target.value as T)"
     :aria-readonly="readonly"
     :swipe-gesture="false"
     :disabled="disabled"
+    @ionChange="(e: any) => onChange(e.target.value as T)"
   >
     <IonSegmentButton v-for="(option, index) of options" :key="index" class="pt-1" :value="option.value" layout="icon-top">
       <IonLabel>{{ option.text }}</IonLabel>

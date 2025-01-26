@@ -35,7 +35,7 @@
 <script setup lang="ts">
 import { MilestoneGoal, SimpleGoal, useGoals } from '@/composables/goals';
 import BasePage from './BasePage.vue';
-import { actionSheetController, IonFabButton, IonIcon, IonSearchbar } from '@ionic/vue';
+import { actionSheetController, alertController, IonFabButton, IonIcon, IonSearchbar } from '@ionic/vue';
 import { ref } from 'vue';
 import SimpleGoalCard from '@/components/SimpleGoalCard.vue';
 import MilestoneGoalCard from '@/components/MilestoneGoalCard.vue';
@@ -44,9 +44,31 @@ import { add } from 'ionicons/icons';
 import { createFullscreenModal } from '@/composables/modal';
 import CreateModal from '@/features/create/CreateModal.vue';
 import EditMilestoneGoalModal from '@/features/edit/EditMilestoneGoalModal.vue';
+import EditSimpleGoalModal from '@/features/edit/EditSimpleGoalModal.vue';
 
 const { goals, remove } = useGoals();
 const search = ref('');
+
+const confirmDelete = async (id: string) => {
+  const alert = await alertController.create({
+    header: 'Delete goal forever?',
+    buttons: [
+      {
+        text: 'cancel',
+        role: 'cancel'
+      },
+      {
+        text: 'Delete',
+        role: 'destructive',
+        handler: async () => {
+          await remove(id);
+        }
+      }
+    ]
+  });
+  alert.present();
+  await alert.onWillDismiss();
+};
 
 const onComplete = (goal: SimpleGoal) => {
   goal.completedAt = createDateOnly();
@@ -55,16 +77,12 @@ const onUncomplete = (goal: SimpleGoal) => {
   goal.completedAt = undefined;
 };
 const onEditSimpleGoal = async (goal: SimpleGoal) => {
-  let action;
-  if (goal.completedAt) {
-    action = { text: 'Mark as uncomplete', data: 'uncomplete' };
-  } else {
-    action = { text: 'Mark as complete', data: 'complete' };
-  }
-
   const sheet = await actionSheetController.create({
     buttons: [
-      action,
+      {
+        text: 'Edit',
+        data: 'edit'
+      },
       {
         text: 'Delete',
         role: 'destructive',
@@ -83,15 +101,19 @@ const onEditSimpleGoal = async (goal: SimpleGoal) => {
   const resp = await sheet.onWillDismiss();
 
   if (resp.data === 'delete') {
-    remove(goal.id);
+    await confirmDelete(goal.id);
+    return;
   }
 
-  if (resp.data === 'uncomplete') {
-    goal.completedAt = undefined;
-  }
+  if (resp.data === 'edit') {
+    const modal = await createFullscreenModal({
+      component: EditSimpleGoalModal,
+      componentProps: { initial: goal }
+    });
+    modal.present();
 
-  if (resp.data === 'complete') {
-    goal.completedAt = createDateOnly();
+    await modal.onWillDismiss();
+    return;
   }
 };
 
@@ -136,7 +158,8 @@ const onEditMilestoneGoal = async (goal: MilestoneGoal) => {
   const resp = await sheet.onWillDismiss();
 
   if (resp.data === 'delete') {
-    remove(goal.id);
+    await confirmDelete(goal.id);
+    return;
   }
 
   if (resp.data === 'edit') {
@@ -147,6 +170,7 @@ const onEditMilestoneGoal = async (goal: MilestoneGoal) => {
     modal.present();
 
     await modal.onWillDismiss();
+    return;
   }
 };
 </script>
