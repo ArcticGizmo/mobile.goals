@@ -1,7 +1,13 @@
 <template>
   <BasePage max-width="500px">
     <template #header>
-      <IonSearchbar class="px-2 my-0.5" v-model="search" />
+      <div class="flex">
+        <IonSearchbar class="px-2 -mr-2 my-0.5" v-model="search" />
+        <IonButton fill="clear" @click="dense = !dense">
+          <IonIcon v-if="dense" slot="icon-only" :icon="denseIcon" color="primary" />
+          <IonIcon v-else slot="icon-only" :icon="denseIcon" color="medium" />
+        </IonButton>
+      </div>
       <div class="mx-2 mb-1">
         <FilterItem :icon="star" text="Completed" :model-value="filter === 'complete'" @click="toggleFilter('complete')" />
         <FilterItem :icon="starEmpty" text="Incomplete" :model-value="filter === 'incomplete'" @click="toggleFilter('incomplete')" />
@@ -12,6 +18,7 @@
         v-if="goal.type === 'simple'"
         :name="goal.name"
         :completed-at="goal.completedAt"
+        :dense
         @complete="onComplete(goal)"
         @uncomplete="onUncomplete(goal)"
         @edit="onEditSimpleGoal(goal)"
@@ -21,6 +28,7 @@
         :name="goal.name"
         :targets="goal.targets"
         :count="goal.records.length"
+        :dense
         @add="onAddRecord(goal)"
         @remove="onRemoveRecord(goal)"
         @edit="onEditMilestoneGoal(goal)"
@@ -42,7 +50,7 @@
 <script setup lang="ts">
 import { Goal, MilestoneGoal, SimpleGoal, useGoals } from '@/composables/goals';
 import BasePage from './BasePage.vue';
-import { actionSheetController, alertController, IonButton, IonSearchbar } from '@ionic/vue';
+import { actionSheetController, alertController, IonButton, IonIcon, IonSearchbar } from '@ionic/vue';
 import { computed, ref } from 'vue';
 import SimpleGoalCard from '@/components/SimpleGoalCard.vue';
 import MilestoneGoalCard from '@/components/MilestoneGoalCard.vue';
@@ -52,11 +60,12 @@ import EditMilestoneGoalModal from '@/features/edit/EditMilestoneGoalModal.vue';
 import EditSimpleGoalModal from '@/features/edit/EditSimpleGoalModal.vue';
 import { sort } from '@/composables/sort';
 import FilterItem from '@/components/FilterItem.vue';
-import { starEmpty, star } from '@/icons';
+import { starEmpty, star, dense as denseIcon } from '@/icons';
 
 type Filter = 'complete' | 'incomplete';
 
 const { goals, remove } = useGoals();
+const dense = ref(false);
 const search = ref('');
 
 const filter = ref<Filter>();

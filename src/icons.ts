@@ -17,6 +17,7 @@ import controller from '@mdi/svg/svg/controller.svg';
 import server from '@mdi/svg/svg/server.svg';
 import paw from '@mdi/svg/svg/paw.svg';
 import food from '@mdi/svg/svg/food.svg';
+import dense from '@mdi/svg/svg/arrow-collapse-all.svg';
 
 import { add, home, settings, book, star, starHalfOutline as starHalf, starOutline as starEmpty } from 'ionicons/icons';
 
@@ -46,5 +47,6 @@ export {
   home,
   settings,
   paw,
-  food
+  food,
+  dense
 };

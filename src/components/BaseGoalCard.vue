@@ -12,7 +12,7 @@
         </IonButton>
       </div>
     </IonCardHeader>
-    <IonCardContent>
+    <IonCardContent v-if="!dense">
       <slot />
     </IonCardContent>
   </IonCard>
@@ -22,7 +22,7 @@
 import { dotsVertical } from '@/icons';
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonIcon, IonLabel } from '@ionic/vue';
 
-defineProps<{ name: string; completed: boolean }>();
+defineProps<{ name: string; completed: boolean; dense?: boolean }>();
 
 const emits = defineEmits(['edit']);
 
@@ -44,6 +44,6 @@ ion-card.completed {
 
 ion-card-header,
 ion-card-content {
-  padding: 0.75rem 1rem
+  padding: 0.75rem 1rem;
 }
 </style>
