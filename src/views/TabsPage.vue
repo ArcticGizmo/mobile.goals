@@ -3,9 +3,18 @@
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
       <ion-tab-bar slot="bottom">
-        <ion-tab-button v-for="(item, index) in items" :key="index" :tab="item.tab" :href="item.href">
-          <ion-icon aria-hidden="true" :icon="item.icon" />
-          <ion-label>{{ item.text }}</ion-label>
+        <ion-tab-button tab="home" href="/home">
+          <ion-icon aria-hidden="true" :icon="home" />
+          <ion-label> Home </ion-label>
+        </ion-tab-button>
+
+        <IonFabButton size="small" @click="openCreateGoalModal()">
+          <IonIcon :icon="add" />
+        </IonFabButton>
+
+        <ion-tab-button tab="settings" href="/settings">
+          <ion-icon aria-hidden="true" :icon="settings" />
+          <ion-label> Settings </ion-label>
         </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
@@ -13,36 +22,9 @@
 </template>
 
 <script setup lang="ts">
-import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
-import { settings, addCircle, home } from 'ionicons/icons';
-
-interface NavItem {
-  tab: string;
-  href: string;
-  icon: string;
-  text?: string;
-}
-
-const items: NavItem[] = [
-  {
-    tab: 'home',
-    href: '/home',
-    icon: home,
-    text: 'Home'
-  },
-  {
-    tab: 'feature',
-    href: '/feature',
-    icon: addCircle,
-    text: 'Feature'
-  },
-  {
-    tab: 'settings',
-    href: '/settings',
-    icon: settings,
-    text: 'Settings'
-  }
-];
+import { openCreateGoalModal } from '@/composables/modal';
+import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet, IonFabButton } from '@ionic/vue';
+import { settings, home, add } from 'ionicons/icons';
 </script>
 
 <style>

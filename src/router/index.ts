@@ -14,11 +14,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'home',
-        component: HomePage,
-      },
-      {
-        path: 'feature',
-        component: () => import('@/views/FeaturePage.vue')
+        component: HomePage
       },
       {
         path: 'settings',

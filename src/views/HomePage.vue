@@ -34,11 +34,6 @@
       <IonButton class="mt-4" fill="outline" @click="onResetFilters()">Clear filters</IonButton>
     </div>
 
-    <div class="fixed bottom-2 right-2">
-      <IonFabButton @click="onCreate()">
-        <IonIcon :icon="add" />
-      </IonFabButton>
-    </div>
     <!-- bottom padding for scroll -->
     <div style="height: 2rem"></div>
   </BasePage>
@@ -47,18 +42,17 @@
 <script setup lang="ts">
 import { Goal, MilestoneGoal, SimpleGoal, useGoals } from '@/composables/goals';
 import BasePage from './BasePage.vue';
-import { actionSheetController, alertController, IonButton, IonFabButton, IonIcon, IonSearchbar } from '@ionic/vue';
+import { actionSheetController, alertController, IonButton, IonSearchbar } from '@ionic/vue';
 import { computed, ref } from 'vue';
 import SimpleGoalCard from '@/components/SimpleGoalCard.vue';
 import MilestoneGoalCard from '@/components/MilestoneGoalCard.vue';
 import { createDateOnly } from '@/composables/dateOnly';
-import { createFullscreenModal } from '@/composables/modal';
-import CreateModal from '@/features/create/CreateModal.vue';
+import { createFullscreenModal, openCreateGoalModal } from '@/composables/modal';
 import EditMilestoneGoalModal from '@/features/edit/EditMilestoneGoalModal.vue';
 import EditSimpleGoalModal from '@/features/edit/EditSimpleGoalModal.vue';
 import { sort } from '@/composables/sort';
 import FilterItem from '@/components/FilterItem.vue';
-import { starEmpty, add, star } from '@/icons';
+import { starEmpty, star } from '@/icons';
 
 type Filter = 'complete' | 'incomplete';
 
@@ -105,6 +99,8 @@ const filteredGoals = computed(() => {
         return true;
     }
   });
+
+  items.sort((a, b) => a.name.localeCompare(b.name));
 
   return sort(items, 'name', search.value);
 });
@@ -185,12 +181,7 @@ const onRemoveRecord = (goal: MilestoneGoal) => {
 };
 
 const onCreate = async () => {
-  const modal = await createFullscreenModal({
-    component: CreateModal
-  });
-  modal.present();
-
-  await modal.onDidDismiss();
+  await openCreateGoalModal();
 };
 
 const onEditMilestoneGoal = async (goal: MilestoneGoal) => {
