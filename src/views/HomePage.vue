@@ -11,6 +11,12 @@
       <div class="mx-2 mb-1">
         <FilterItem :icon="star" text="Completed" :model-value="filter === 'complete'" @click="toggleFilter('complete')" />
         <FilterItem :icon="starEmpty" text="Incomplete" :model-value="filter === 'incomplete'" @click="toggleFilter('incomplete')" />
+        <FilterItem
+          :icon="progressStar"
+          text="Milestones"
+          :model-value="filterForMilestones"
+          @click="filterForMilestones = !filterForMilestones"
+        />
       </div>
     </template>
     <div v-for="goal in filteredGoals" :key="goal.id">
@@ -62,7 +68,7 @@ import EditMilestoneGoalModal from '@/features/edit/EditMilestoneGoalModal.vue';
 import EditSimpleGoalModal from '@/features/edit/EditSimpleGoalModal.vue';
 import { sort } from '@/composables/sort';
 import FilterItem from '@/components/FilterItem.vue';
-import { starEmpty, star, dense as denseIcon } from '@/icons';
+import { starEmpty, star, dense as denseIcon, progressStar } from '@/icons';
 
 type Filter = 'complete' | 'incomplete';
 
@@ -71,6 +77,7 @@ const dense = ref(true);
 const search = ref('');
 
 const filter = ref<Filter | undefined>('incomplete');
+const filterForMilestones = ref(false);
 const toggleFilter = (value: Filter) => {
   if (filter.value === value) {
     filter.value = undefined;
@@ -99,7 +106,7 @@ const isGoalComplete = (goal: Goal) => {
 };
 
 const filteredGoals = computed(() => {
-  const items = goals.value.filter(x => {
+  let items = goals.value.filter(x => {
     const isComplete = isGoalComplete(x);
     switch (filter.value) {
       case 'complete':
@@ -110,6 +117,10 @@ const filteredGoals = computed(() => {
         return true;
     }
   });
+
+  if (filterForMilestones.value) {
+    items = items.filter(x => x.type === 'milestone');
+  }
 
   items.sort((a, b) => a.name.localeCompare(b.name));
 
