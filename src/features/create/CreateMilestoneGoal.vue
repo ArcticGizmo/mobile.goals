@@ -6,7 +6,9 @@
 
   <TargetsInput class="mt-4" name="targets" label="Your Targets" />
 
-  <IonButton class="fixed bottom-0 w-full pr-8" @click="onCreate()">Create</IonButton>
+  <KeyboardSafeFooter>
+    <IonButton class="px-4" expand="block" @click="onCreate()">Create</IonButton>
+  </KeyboardSafeFooter>
 </template>
 
 <script setup lang="ts">
@@ -15,6 +17,7 @@ import { useCreateMilestoneForm } from './createMilestoneForm';
 import TextInput from '@/components/inputs/TextInput.vue';
 import IconInput from '@/components/inputs/IconInput.vue';
 import TargetsInput from '@/components/inputs/TargetsInput.vue';
+import KeyboardSafeFooter from '@/components/KeyboardSafeFooter.vue';
 
 const { create, form } = useCreateMilestoneForm();
 

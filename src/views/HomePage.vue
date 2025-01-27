@@ -67,7 +67,7 @@ import { starEmpty, star, dense as denseIcon } from '@/icons';
 type Filter = 'complete' | 'incomplete';
 
 const { goals, remove, loading } = useGoals();
-const dense = ref(false);
+const dense = ref(true);
 const search = ref('');
 
 const filter = ref<Filter | undefined>('incomplete');

@@ -25,13 +25,14 @@
         <IonTitle color="dark">{{ title }}</IonTitle>
       </IonToolbar>
     </IonHeader>
-    <IonLoading :is-open="loading" class="transparent-loading" />
+    <IonLoading v-if="loading" :is-open="loading" class="transparent-loading" />
     <IonContent>
       <div class="content" :class="{ 'h-full': fixedContentHeight }" :style="{ maxWidth }">
         <slot></slot>
       </div>
     </IonContent>
     <IonFooter :style="{ maxWidth, margin: 'auto' }">
+      <div class="teleporting-footer"></div>
       <slot name="footer"></slot>
     </IonFooter>
   </IonPage>

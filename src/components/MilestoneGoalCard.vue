@@ -1,5 +1,5 @@
 <template>
-  <BaseGoalCard :name :completed :icon :dense @edit="emits('edit')">
+  <BaseGoalCard :name :completed :icon :dense @click="emits('edit')">
     <template #subtitle>
       <IonLabel>{{ count || 0 }} / {{ max }}</IonLabel>
     </template>
@@ -7,10 +7,10 @@
       <MilestoneIcon v-for="target of sortedTargets" :key="target" :count="target" :complete="count >= target" />
     </div>
     <div class="flex justify-end w-full">
-      <IonButton class="w-20" size="large" fill="clear" @click="emits('remove')">
+      <IonButton class="w-20" size="large" fill="clear" @click.stop="emits('remove')">
         <IonIcon slot="icon-only" :icon="minus" color="danger" />
       </IonButton>
-      <IonButton class="w-20" size="large" fill="outline" color="secondary" @click="emits('add')">
+      <IonButton class="w-20" size="large" fill="outline" color="secondary" @click.stop="emits('add')">
         <IonIcon slot="icon-only" :icon="plus" />
       </IonButton>
     </div>

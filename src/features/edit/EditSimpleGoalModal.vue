@@ -8,10 +8,10 @@
 
       <BooleanInput class="mt-4" name="completed" label="Completed" true-text="Yes" false-text="No" />
 
-      <div class="actions fixed left-0 bottom-0 w-full px-4">
+      <KeyboardSafeFooter>
         <IonButton class="mb-4" expand="block" @click="onUpdate()">Update</IonButton>
         <IonButton expand="block" fill="outline" color="danger" @click="onDelete()">Delete</IonButton>
-      </div>
+      </KeyboardSafeFooter>
     </div>
   </BasePage>
 </template>
@@ -25,6 +25,7 @@ import { SimpleGoal } from '@/composables/goals';
 import { onMounted } from 'vue';
 import { useEditSimpleForm } from './editSimpleForm';
 import BooleanInput from '@/components/inputs/BooleanInput.vue';
+import KeyboardSafeFooter from '@/components/KeyboardSafeFooter.vue';
 
 const props = defineProps<{ initial: SimpleGoal }>();
 

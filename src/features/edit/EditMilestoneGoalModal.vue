@@ -11,10 +11,10 @@
       <TargetsInput class="mt-4" name="targets" label="Your Targets" />
       <RecordsInput class="mt-4" name="records" label="Your Records" />
 
-      <div class="actions fixed left-0 bottom-0 w-full px-4">
+      <KeyboardSafeFooter>
         <IonButton class="mb-4" expand="block" @click="onUpdate()">Update</IonButton>
         <IonButton expand="block" fill="outline" color="danger" @click="onDelete()">Delete</IonButton>
-      </div>
+      </KeyboardSafeFooter>
     </div>
   </BasePage>
 </template>
@@ -29,6 +29,7 @@ import { useEditMilestoneForm } from './editMilestoneForm';
 import { MilestoneGoal } from '@/composables/goals';
 import { onMounted } from 'vue';
 import RecordsInput from '@/components/inputs/RecordsInput.vue';
+import KeyboardSafeFooter from '@/components/KeyboardSafeFooter.vue';
 
 const props = defineProps<{ initial: MilestoneGoal }>();
 

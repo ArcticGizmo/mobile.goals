@@ -27,7 +27,7 @@ const GOAL_KEY = 'goals';
 const kvStore = useKvStore();
 
 const goals = ref<Goal[]>([]);
-const loading = ref(true);
+const loading = ref(false);
 
 watch(
   goals,
@@ -39,9 +39,14 @@ watch(
 );
 
 const initialLoad = async () => {
-  const data = await kvStore.loadJson<Goal[]>(GOAL_KEY);
-  goals.value = data || [];
-  loading.value = false;
+  loading.value = true;
+  try {
+    const data = await kvStore.loadJson<Goal[]>(GOAL_KEY);
+    console.log(data);
+    goals.value = data || [];
+  } finally {
+    loading.value = false;
+  }
 };
 
 const add = async (goal: Goal) => {
