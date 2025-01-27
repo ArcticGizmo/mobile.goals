@@ -50,6 +50,7 @@ const setValue = (arr: string[]) => {
 };
 
 const onChange = (e: IonInputCustomEvent<InputChangeEventDetail>, index: number) => {
+  e.preventDefault();
   const v = parseDateOnly(e.detail.value || '') || value.value[index];
 
   const newArr = [...value.value];
