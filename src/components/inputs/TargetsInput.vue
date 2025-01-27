@@ -51,6 +51,7 @@ const setValue = (arr: number[]) => {
 };
 
 const onChange = (e: IonInputCustomEvent<InputChangeEventDetail>, index: number) => {
+  e.preventDefault();
   const v = Number(e.detail.value) || value.value[index];
 
   if (v <= 0) {

@@ -42,8 +42,9 @@ const initialLoad = async () => {
   loading.value = true;
   try {
     const data = await kvStore.loadJson<Goal[]>(GOAL_KEY);
-    console.log(data);
     goals.value = data || [];
+  } catch (err) {
+    console.error('unable to load goals', err);
   } finally {
     loading.value = false;
   }
