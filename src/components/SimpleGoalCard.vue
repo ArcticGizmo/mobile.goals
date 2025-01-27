@@ -1,5 +1,5 @@
 <template>
-  <BaseGoalCard :name :completed :dense :icon @click="emits('edit')">
+  <BaseGoalCard :name :completed :dense :icon :difficulty @click="emits('edit')">
     <div class="flex justify-end -mt-4">
       <IonButton v-if="completed" class="no-border" fill="outline" color="success" @click.stop="emits('uncomplete')">
         Completed {{ completedAt }}!
@@ -13,8 +13,9 @@
 import { IonButton } from '@ionic/vue';
 import BaseGoalCard from './BaseGoalCard.vue';
 import { computed } from 'vue';
+import { GoalDifficulty } from '@/composables/goals';
 
-const props = defineProps<{ name: string; icon?: string; completedAt?: string; dense?: boolean }>();
+const props = defineProps<{ name: string; icon?: string; completedAt?: string; dense?: boolean; difficulty?: GoalDifficulty }>();
 
 const emits = defineEmits(['complete', 'uncomplete', 'edit']);
 

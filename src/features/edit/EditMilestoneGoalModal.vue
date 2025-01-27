@@ -7,6 +7,7 @@
         <IconInput name="icon" />
         <TextInput class="mt-2 ml-4" name="name" label="Name" autocapitalize="sentences" autocorrect />
       </div>
+      <DifficultySelector class="mt-4" name="difficulty" label="Difficulty" />
 
       <TargetsInput class="mt-4" name="targets" label="Your Targets" />
       <RecordsInput class="mt-4" name="records" label="Your Records" />
@@ -30,6 +31,7 @@ import { MilestoneGoal } from '@/composables/goals';
 import { onMounted } from 'vue';
 import RecordsInput from '@/components/inputs/RecordsInput.vue';
 import KeyboardSafeFooter from '@/components/KeyboardSafeFooter.vue';
+import DifficultySelector from '@/components/inputs/DifficultySelector.vue';
 
 const props = defineProps<{ initial: MilestoneGoal }>();
 

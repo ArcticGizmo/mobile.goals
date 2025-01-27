@@ -2,10 +2,13 @@ import { ComputedRef, readonly, ref, watch } from 'vue';
 import { useKvStore } from './kvStore';
 import { SelectableIcon } from '@/components/inputs/iconSelectOptions';
 
+export type GoalDifficulty = 'easy' | 'medium' | 'hard';
+
 interface BaseGoal {
   id: string;
   name: string;
   icon?: SelectableIcon;
+  difficulty?: GoalDifficulty;
 }
 
 export interface MilestoneGoal extends BaseGoal {

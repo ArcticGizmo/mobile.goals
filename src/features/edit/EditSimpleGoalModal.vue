@@ -5,6 +5,7 @@
         <IconInput name="icon" />
         <TextInput class="mt-2 ml-4" name="name" label="Name" autocapitalize="sentences" autocorrect />
       </div>
+      <DifficultySelector class="mt-4" name="difficulty" label="Difficulty" />
 
       <BooleanInput class="mt-4" name="completed" label="Completed" true-text="Yes" false-text="No" />
 
@@ -26,6 +27,7 @@ import { onMounted } from 'vue';
 import { useEditSimpleForm } from './editSimpleForm';
 import BooleanInput from '@/components/inputs/BooleanInput.vue';
 import KeyboardSafeFooter from '@/components/KeyboardSafeFooter.vue';
+import DifficultySelector from '@/components/inputs/DifficultySelector.vue';
 
 const props = defineProps<{ initial: SimpleGoal }>();
 

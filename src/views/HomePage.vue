@@ -26,6 +26,7 @@
         :completed-at="goal.completedAt"
         :icon="goal.icon"
         :dense
+        :difficulty="goal.difficulty"
         @complete="onComplete(goal)"
         @uncomplete="onUncomplete(goal)"
         @edit="onEditSimpleGoal(goal)"
@@ -37,6 +38,7 @@
         :targets="goal.targets"
         :count="goal.records.length"
         :dense
+        :difficulty="goal.difficulty"
         @add="onAddRecord(goal)"
         @remove="onRemoveRecord(goal)"
         @edit="onEditMilestoneGoal(goal)"

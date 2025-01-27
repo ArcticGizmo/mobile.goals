@@ -1,6 +1,6 @@
 import { SelectableIcon } from '@/components/inputs/iconSelectOptions';
 import { createDateOnly } from '@/composables/dateOnly';
-import { SimpleGoal, useGoals } from '@/composables/goals';
+import { GoalDifficulty, SimpleGoal, useGoals } from '@/composables/goals';
 import { useForm } from 'vee-validate';
 import { ref } from 'vue';
 import * as yup from 'yup';
@@ -14,7 +14,8 @@ export const useEditSimpleForm = () => {
     id: yup.string().required(),
     name: yup.string().required().label('Name'),
     icon: yup.string<SelectableIcon>().optional().label('Icon'),
-    completed: yup.boolean()
+    completed: yup.boolean(),
+    difficulty: yup.string<GoalDifficulty>().optional().label('Difficulty')
   });
 
   type EditSimpleGoalForm = yup.InferType<typeof schema>;
@@ -30,7 +31,8 @@ export const useEditSimpleForm = () => {
         id: goal.id,
         name: goal.name,
         icon: goal.icon,
-        completed: !!goal.completedAt
+        completed: !!goal.completedAt,
+        difficulty: goal.difficulty
       });
   };
 
@@ -43,7 +45,8 @@ export const useEditSimpleForm = () => {
       type: 'simple',
       name: values.name,
       icon: values.icon,
-      completedAt
+      completedAt,
+      difficulty: values.difficulty
     });
   };
 

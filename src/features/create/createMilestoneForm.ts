@@ -1,5 +1,5 @@
 import { SelectableIcon } from '@/components/inputs/iconSelectOptions';
-import { useGoals } from '@/composables/goals';
+import { GoalDifficulty, useGoals } from '@/composables/goals';
 import { generateId } from '@/composables/identifier';
 import { useForm } from 'vee-validate';
 import * as yup from 'yup';
@@ -10,7 +10,8 @@ export const useCreateMilestoneForm = () => {
   const schema = yup.object({
     name: yup.string().required().label('Name'),
     icon: yup.string<SelectableIcon>().optional().label('Icon'),
-    targets: yup.array<number[]>().required().min(1).label('Targets')
+    targets: yup.array<number[]>().required().min(1).label('Targets'),
+    difficulty: yup.string<GoalDifficulty>().optional().label('Difficulty')
   });
 
   type CreateMilestoneGoalForm = yup.InferType<typeof schema>;
@@ -20,7 +21,8 @@ export const useCreateMilestoneForm = () => {
     validateOnMount: false,
     initialValues: {
       icon: 'star',
-      targets: [1,2,3,4,5,6,7,8,9,10,10,12,13]
+      targets: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 12, 13],
+      difficulty: 'easy'
     }
   });
 
@@ -30,6 +32,7 @@ export const useCreateMilestoneForm = () => {
       type: 'milestone',
       name: values.name,
       icon: values.icon,
+      difficulty: values.difficulty,
       targets: [...new Set(values.targets)],
       records: []
     });
