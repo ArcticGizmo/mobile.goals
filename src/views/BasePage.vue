@@ -87,4 +87,8 @@ const onClose = () => {
 .ion-page.fill-height.has-toolbar {
   grid-template-rows: auto 1fr;
 }
+
+.ion-page-hidden .teleporting-footer {
+  display: none;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <Teleport v-if="isClosed" to="ion-modal.show-modal .teleporting-footer">
+  <Teleport v-if="isClosed" defer to="ion-modal .teleporting-footer">
     <slot></slot>
   </Teleport>
 </template>
