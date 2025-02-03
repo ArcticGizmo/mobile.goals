@@ -1,10 +1,7 @@
-- make "create" page
+
 - "milestone goals" edit page
-    - number of milestones
-    - manually edit the dates in records
     - see a graph for the year
 - export to file
-- add search on name functionality
-- add filter by completion (incomplete/partial/complete)
 - add ability to archive/delete goals
     - archive is so that you still have a history of what happened, but it is accessed separately for performance reasons
+- add tags

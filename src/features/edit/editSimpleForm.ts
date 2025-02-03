@@ -26,14 +26,14 @@ export const useEditSimpleForm = () => {
   });
 
   const initialise = (goal: SimpleGoal) => {
-    (initialCompletedAt.value = goal.completedAt),
-      form.setValues({
-        id: goal.id,
-        name: goal.name,
-        icon: goal.icon,
-        completed: !!goal.completedAt,
-        difficulty: goal.difficulty
-      });
+    initialCompletedAt.value = goal.completedAt;
+    form.setValues({
+      id: goal.id,
+      name: goal.name,
+      icon: goal.icon,
+      completed: !!goal.completedAt,
+      difficulty: goal.difficulty
+    });
   };
 
   const update = async (values: EditSimpleGoalForm) => {
